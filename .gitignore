@@ -1,0 +1,5 @@
+bin
+obj
+# For codeblocks IDE
+codeblocks/*.depend
+codeblocks/*.layout
