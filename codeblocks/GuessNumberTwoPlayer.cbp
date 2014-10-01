@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="GuessNumber" />
+		<Option title="GuessNumberTwoPlayers" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -47,7 +47,7 @@
 		<Unit filename="../base/VirtualMachine.h" />
 		<Unit filename="../guess_number/GuessNumberTwoPlayer.cpp" />
 		<Unit filename="../guess_number/GuessNumberTwoPlayer.h" />
-		<Unit filename="../guess_number/main.cpp" />
+		<Unit filename="../guess_number/mainTwoPlayer.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

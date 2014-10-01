@@ -17,6 +17,7 @@ VirtualMachine::VirtualMachine(choicesList code) {
 VirtualMachine::~VirtualMachine(){
     delete programTree;
     delete[] memory;
+    memory = NULL;
 }
 
 nextMove VirtualMachine::run(int** board){
