@@ -6,7 +6,7 @@
 #include <string>
 #include <list>
 
-#include "GuessNumberTwoPlayer.h"
+#include "guess_number/GuessNumberOnePlayer.h"
 
 namespace po = boost::program_options;
 
@@ -46,8 +46,7 @@ int main(int argc, char *argv[]) {
         desc.add_options()
             ("help"    , "produce help message")
             ("secret"  , po::value<std::string>(), "Goal numbers")
-            ("program1", po::value<std::string>(), "Program code")
-            ("program2", po::value<std::string>(), "Program code");
+            ("program" , po::value<std::string>(), "Program code");
 
         po::variables_map vm;
         po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -58,16 +57,13 @@ int main(int argc, char *argv[]) {
             return 0;
         }
 
-        if (vm.count("secret") && vm.count("program1") &&
-            vm.count("program2")) {
-            std::list<int> goal  = readIntList(vm["secret"].as<std::string>());
-            std::list<int> code1 = readIntList(vm["program1"].as<std::string>());
-            std::list<int> code2 = readIntList(vm["program2"].as<std::string>());
-            GuessNumberTwoPlayer *objGame = new GuessNumberTwoPlayer( goal
-                                                                    , code1
-                                                                    , code2);
-            int winner = objGame->play();
-            std::cout << winner << std::endl;
+        if (vm.count("secret") && vm.count("program")) {
+            std::list<int> goal = readIntList(vm["secret"].as<std::string>());
+            std::list<int> code = readIntList(vm["program"].as<std::string>());
+            GuessNumberOnePlayer *objGame = new GuessNumberOnePlayer(goal
+                                                                    , code);
+            int score = objGame->play();
+            std::cout << score << std::endl;
             delete objGame;
         } else {
             std::cout << desc << std::endl;

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="GuessNumberOnePlayer" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../bin/Debug/GuessNumberOnePlayer" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../obj/Debug" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="--secret 23,23 --program 4,10,9,7,4,9,4,10,7,2" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory=".." />
+				</Compiler>
+				<Linker>
+					<Add option="-lboost_program_options" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="../bin/Release/GuessNumberOnePlayer" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../src" />
+				<Option object_output="../obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="--secret 23,23 --program 4,10,9,7,4,9,4,10,7,2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory=".." />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lboost_program_options" />
+				</Linker>
+			</Target>
+			<Target title="test">
+				<Option output="bin/test/GuessNumberOnePlayer" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/test/" />
+				<Option object_output="obj/test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="../base/Node.cpp" />
+		<Unit filename="../base/Node.h" />
+		<Unit filename="../base/OnePlayerGame.cpp" />
+		<Unit filename="../base/OnePlayerGame.h" />
+		<Unit filename="../base/Player.cpp" />
+		<Unit filename="../base/Player.h" />
+		<Unit filename="../base/VirtualMachine.cpp" />
+		<Unit filename="../base/VirtualMachine.h" />
+		<Unit filename="../guess_number/GuessNumberOnePlayer.cpp" />
+		<Unit filename="../guess_number/GuessNumberOnePlayer.h" />
+		<Unit filename="../guess_number/mainOnePlayer.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
