@@ -4,15 +4,16 @@
 #include <list>
 #include <vector>
 
-typedef std::list<int> choicesList;
-const int kMemoryLimitPosition = 10;
-const int kMemoryLimitInt      = 100;
+#include "base/ChoicesList.h"
+
+const int kMemoryLimitPosition = 9;
+const int kMemoryLimitInt      = 99;
 const int kExpressionLimit     = 2;
 
 class Node
 {
     public:
-        Node(choicesList code_in);
+        Node(ChoicesList* code_in);
         virtual ~Node();
         bool create(int type_in);
         int getType();
@@ -25,7 +26,7 @@ class Node
         //typedef std::vector<Node*> childs;
         bool complete;
         std::vector<Node*> myChilds;
-        choicesList code;
+        ChoicesList* code;
         int type;
 
         int memoryPosition;

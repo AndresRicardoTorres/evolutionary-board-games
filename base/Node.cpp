@@ -1,6 +1,6 @@
 #include "Node.h"
 
-Node::Node(choicesList code_in) : code(code_in) {
+Node::Node(ChoicesList* code_in) : code(code_in) {
     complete       = false;
     type           = 0;
     memoryNumber   = 0;
@@ -14,21 +14,14 @@ Node::~Node() {
 }
 
 int Node::nextNumber(int mod) {
-    if (code.empty()) {
-        return 0;
-    }
-    int next = (code.front() % mod);
-    if (next == 0) {
-        next = mod;
-    }
-    code.pop_front();
-    return next;
+    return code->nextNumber(mod);
 }
 
 bool Node::create(int type_in) {
     type              = type_in;
     int limitSequence = 10;
     int howManyNodes  = 0;
+    bool created      = true;
 
     switch (type) {
         case 1:  /// Sequence
@@ -43,19 +36,19 @@ bool Node::create(int type_in) {
                     delete aNode;
                 }
             if (0 == howManyNodes)
-                return false;
+                created = false;
             break;
         case 2:  /// Set in memory
             memoryPosition = nextNumber(kMemoryLimitPosition);
             memoryNumber   = nextNumber(kMemoryLimitInt);
 
             if (0 == memoryPosition || 0 == memoryNumber)
-                return false;
+                created = false;
             break;
         default:
-            return false;
+            created = false;
         }
-    return true;
+    return created;
 }
 
 int Node::getType() {

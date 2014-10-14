@@ -17,10 +17,8 @@ OnePlayerGame::~OnePlayerGame() {
 
     for (int i = 0; i < width; i++){
         delete[] board[i];
-        board[i] = NULL;
     }
     delete[] board;
-    board = NULL;
 }
 
 int OnePlayerGame::play() {

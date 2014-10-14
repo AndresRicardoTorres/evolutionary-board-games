@@ -11,7 +11,10 @@ GuessNumberOnePlayer::~GuessNumberOnePlayer(){
 }
 
 #include <stdlib.h>
+#include <iostream>
 int GuessNumberOnePlayer::play() {
+    if(solution.size() != 2)
+        return -1;
     int limitTime = 100;
     bool gameOver = false;
 
