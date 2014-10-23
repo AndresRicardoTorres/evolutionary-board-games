@@ -99,8 +99,8 @@ void deleteBoard(int** board, int width, int heigth) {
 
 int testNodes2() {
     ChoicesList* cl = case2();
-    Node* programTree = new Node(cl);
-    programTree->create(1);
+    Node* programTree = new Node(cl, 1);
+    programTree->create();
 
     std::vector<Node*> childs = programTree->getChilds();
 
@@ -113,8 +113,8 @@ int testNodes2() {
 
 int testNodes3() {
     ChoicesList* cl = case3();
-    Node* programTree = new Node(cl);
-    bool isComplete = programTree->create(1);
+    Node* programTree = new Node(cl, 1);
+    bool isComplete = programTree->create();
     if(isComplete)
         std::cout << "complete";
     else
@@ -129,8 +129,8 @@ int testNodes3() {
 
 int testNodes10() {
     ChoicesList* cl = case10();
-    Node* programTree = new Node(cl);
-    programTree->create(1);
+    Node* programTree = new Node(cl, 1);
+    programTree->create();
 
     std::vector<Node*> childs = programTree->getChilds();
 

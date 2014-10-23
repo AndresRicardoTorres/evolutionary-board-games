@@ -2,13 +2,13 @@
 
 VirtualMachine::VirtualMachine(ChoicesList* code) {
     state = 0;
-    programTree = new Node(code);
-    bool isComplete = programTree->create(1);
+    programTree = new Node(code, 1);
+    bool isComplete = programTree->create();
     if(isComplete)
         state = 1;
 
-    memory = new int[kMemoryLimitPosition];
-    for (int i = 0; i < kMemoryLimitPosition; i++){
+    memory = new int[kMemoryPositionLimit];
+    for (int i = 0; i < kMemoryPositionLimit; i++){
         memory[i] = 0;
     }
 }
@@ -20,7 +20,7 @@ VirtualMachine::~VirtualMachine(){
 
 nextMove VirtualMachine::run(int** board){
 
-    for (int i = 0; i < kMemoryLimitPosition; i++){
+    for (int i = 0; i < kMemoryPositionLimit; i++){
         memory[i] = 0;
     }
 
@@ -51,8 +51,8 @@ void VirtualMachine::execute(Node* aNode) {
         }
         break;
     case 2:
-        int a = aNode->getMemoryPosition();
-        int b = aNode->getMemoryNumber();
+        int a = aNode->getNumberValue();
+        int b = aNode->getNumberValue();
         ///std::cout << "memory[" << a << "] =  " << b << std::endl;
         memory[a] = b;
         break;
