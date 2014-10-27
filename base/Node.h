@@ -9,13 +9,16 @@
 const int kMemoryPositionLimit  = 9;
 const int kMemoryIntegerLimit   = 99;
 const int kBooleanOperatorLimit = 3;
-const int kStatementLimit       = 5;
+const int kStatementLimit       = 3;
+const int kNumberStatementLimit = 3;
 
-const int kBooleanStatementCode  = 99;
-const int kBooleanOperatorCode   = 98;
-const int kNumberStatementCode   = 97;
-const int kPositionStatementCode = 96;
-
+const int kNumberValueCode      = 93;
+const int kNumberReadBoardCode  = 94;
+const int kNumberReadMemCode    = 95;
+const int kPositionValueCode    = 96;
+const int kNumberStatementCode  = 97;
+const int kBooleanOperatorCode  = 98;
+const int kBooleanStatementCode = 99;
 
 class Node {
  public:

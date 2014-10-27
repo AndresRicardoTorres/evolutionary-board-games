@@ -12,6 +12,14 @@ std::list <int> listCase0(){
     return testCode;
 }
 
+std::list <int> listCase1(){
+    std::list <int> testCode;
+    testCode.push_back(4);
+    testCode.push_back(10);
+    testCode.push_back(9);
+    return testCode;
+}
+
 std::list <int> listCase3(){
     std::list <int> testCode;
     testCode.push_back(8);
@@ -24,6 +32,37 @@ std::list <int> listCase3(){
     testCode.push_back(6);
     testCode.push_back(1);
     testCode.push_back(5);
+    return testCode;
+}
+
+std::list <int> listCase4(){
+    std::list <int> testCode;
+    for (unsigned int i = 1; i < 200; i++) {
+            testCode.push_back(i);
+    }
+    return testCode;
+}
+
+std::list <int> listCase5(){
+    std::list <int> testCode;
+    testCode.push_back(5);
+    testCode.push_back(7);
+    testCode.push_back(2);
+    testCode.push_back(3);
+    testCode.push_back(5);
+    testCode.push_back(5);
+    testCode.push_back(1);
+    testCode.push_back(1);
+    testCode.push_back(10);
+    testCode.push_back(10);
+    testCode.push_back(4);
+    testCode.push_back(7);
+    testCode.push_back(3);
+    testCode.push_back(3);
+    testCode.push_back(10);
+    testCode.push_back(10);
+    testCode.push_back(2);
+    testCode.push_back(4);
     return testCode;
 }
 
@@ -48,11 +87,7 @@ ChoicesList* case0() {
 }
 
 ChoicesList* case1() {
-    std::list <int> testCode;
-    testCode.push_back(4);
-    testCode.push_back(10);
-    testCode.push_back(9);
-    ChoicesList* cl = new ChoicesList(testCode);
+    ChoicesList* cl = new ChoicesList(listCase1());
     return cl;
 }
 
@@ -73,6 +108,16 @@ ChoicesList* case2() {
 
 ChoicesList* case3() {
     ChoicesList* cl = new ChoicesList(listCase3());
+    return cl;
+}
+
+ChoicesList* case4() {
+    ChoicesList* cl = new ChoicesList(listCase4());
+    return cl;
+}
+
+ChoicesList* case5() {
+    ChoicesList* cl = new ChoicesList(listCase5());
     return cl;
 }
 
@@ -115,10 +160,36 @@ int testNodes3() {
     ChoicesList* cl = case3();
     Node* programTree = new Node(cl, 1);
     bool isComplete = programTree->create();
-    if(isComplete)
-        std::cout << "complete";
-    else
-        std::cout << "incomplete";
+    if(!isComplete)
+        std::cout << "programTree INCOMPLETE" << std::endl;
+    std::vector<Node*> childs = programTree->getChilds();
+
+    delete cl;
+    delete programTree;
+
+    return 0;
+}
+
+int testNodes4() {
+    ChoicesList* cl = case4();
+    Node* programTree = new Node(cl, 1);
+    bool isComplete = programTree->create();
+    if(!isComplete)
+        std::cout << "programTree INCOMPLETE" << std::endl;
+    std::vector<Node*> childs = programTree->getChilds();
+
+    delete cl;
+    delete programTree;
+
+    return 0;
+}
+
+int testNodes5() {
+    ChoicesList* cl = case4();
+    Node* programTree = new Node(cl, 1);
+    bool isComplete = programTree->create();
+    if(!isComplete)
+        std::cout << "programTree INCOMPLETE" << std::endl;
     std::vector<Node*> childs = programTree->getChilds();
 
     delete cl;
@@ -183,6 +254,28 @@ int testVM3() {
     return 0;
 }
 
+int testVM4() {
+    ChoicesList* cl = case4();
+    VirtualMachine* vm = new VirtualMachine(cl);
+    int ** b = emptyBoard(2, 2);
+    vm->run(b);
+    deleteBoard(b, 2, 2);
+    delete cl;
+    delete vm;
+    return 0;
+}
+
+int testVM5() {
+    ChoicesList* cl = case5();
+    VirtualMachine* vm = new VirtualMachine(cl);
+    int ** b = emptyBoard(2, 2);
+    vm->run(b);
+    deleteBoard(b, 2, 2);
+    delete cl;
+    delete vm;
+    return 0;
+}
+
 int testVM10() {
     ChoicesList* cl = case10();
     VirtualMachine* vm = new VirtualMachine(cl);
@@ -237,6 +330,7 @@ int testOneGame10() {
 int testOneGame10Several() {
     OnePlayerGame* opg = new OnePlayerGame(3, 3, listCase10());
     for( unsigned int i = 0; i < 10; i++){
+        std::cout << "** " << i << " **" << std::endl;
         opg->runPlayerA();
     }
 
@@ -248,6 +342,7 @@ int testOneGame10Several() {
 void msg(const char* msg) {
    std::cout << "--- " << msg << " ---" << std::endl;
 }
+
 int main() {
 //    testBoards();
 //
@@ -262,10 +357,17 @@ int main() {
 //    testNodes2();
 //    testVM2();
 //
-    msg("Test 3");
+//    msg("Test 3");
 //    testNodes3();
-    testVM3();
-//
+//    testVM3();
+
+//    msg("Test 4");
+//    testNodes4();
+//    testVM4();
+
+    msg("Test 5");
+    testVM5();
+
 //    msg("Test 10");
 //    testNodes10();
 //    testVM10();

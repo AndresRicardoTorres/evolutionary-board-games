@@ -10,17 +10,15 @@ Node::~Node() {
     }
 }
 
+#include <iostream>
 bool Node::blockStatement() {
+    //std::cout << "blockStatement TYPE" << getType() << std::endl;
     switch (type) {
         case 1:
             return sequenceStatement();
         case 2:
             return setMemoryStatement();
         case 3:
-            return readMemoryStatement();
-        case 4:
-            return readBoardStatement();
-        case 5:
             return ifStatement();
         default:
             return false;
@@ -40,32 +38,37 @@ bool Node::booleanStatement() {
     bool createdB        = operatorA->create();
 
     if (createdOperator && createdA && createdB) {
+        myChilds.push_back(operatorNode);
+        myChilds.push_back(operatorA);
+        myChilds.push_back(operatorB);
+        return true;
+    } else {
         delete operatorNode;
         delete operatorA;
         delete operatorB;
         return false;
     }
-
-    myChilds.push_back(operatorNode);
-    myChilds.push_back(operatorA);
-    myChilds.push_back(operatorB);
-
-    return true;
 }
 
+#include <iostream>
 bool Node::create() {
+    //std::cout << "create TYPE" << getType() << std::endl;
     if (type <= kStatementLimit)
         return blockStatement();
 
     switch (type) {
-        case kBooleanStatementCode:
-            return booleanStatement();
-        case kBooleanOperatorCode:
-            return numberValueStatement(kBooleanOperatorCode);
-        case kNumberStatementCode:
-            return numberStatement();
-        case kPositionStatementCode:
-            return numberValueStatement(kMemoryPositionLimit);
+    case kNumberReadBoardCode:
+        return readBoardStatement();
+    case kNumberReadMemCode:
+        return readMemoryStatement();
+    case kPositionValueCode:
+        return numberValueStatement(kMemoryPositionLimit);
+    case kNumberStatementCode:
+        return numberStatement();
+    case kBooleanOperatorCode:
+        return numberValueStatement(kBooleanOperatorCode);
+    case kBooleanStatementCode:
+        return booleanStatement();
     }
     return false;
 }
@@ -95,20 +98,47 @@ bool Node::ifStatement() {
 
     if (newTypeIf != 0 && newTypeElse != 0 && createdBool && createdElse
        && createdIf) {
+        myChilds.push_back(nodeBool);
+        myChilds.push_back(nodeIf);
+        myChilds.push_back(nodeElse);
+        return true;
+       } else {
         delete nodeBool;
         delete nodeIf;
         delete nodeElse;
+        return false;
        }
-
-    myChilds.push_back(nodeBool);
-    myChilds.push_back(nodeIf);
-    myChilds.push_back(nodeElse);
-
-    return true;
 }
 
+#include <iostream>
 bool Node::numberStatement() {
-    return true;
+    int option = nextNumber(kNumberStatementLimit);
+    Node* numberNode;
+    bool created = false;
+
+    //std::cout << "numberStatement() option" << option << std::endl;
+
+    if (0 == option)
+        return false;
+
+    switch (option) {
+    case 1:
+        numberNode = new Node(code, kNumberValueCode);
+    case 2:
+        numberNode = new Node(code, kNumberReadBoardCode);
+    case 3:
+        numberNode = new Node(code, kNumberReadMemCode);
+    }
+
+    created = numberNode->create();
+//std::cout << "numberStatement() created" << created << std::endl;
+    if (created) {
+        myChilds.push_back(numberNode);
+        return true;
+    } else {
+        delete numberNode;
+        return false;
+    }
 }
 
 bool Node::numberValueStatement(int limit) {
@@ -121,16 +151,41 @@ bool Node::numberValueStatement(int limit) {
     }
 }
 
+#include <iostream>
 int Node::nextNumber(int mod) {
-    return code->nextNumber(mod);
+    int i = code->nextNumber(mod);
+    //std::cout << " nextNumber " << i << " % " << mod << std::endl;
+    return i;
 }
 
 bool Node::readBoardStatement() {
-    return true;
+    Node* memoryPositionX = new Node(code, kPositionValueCode);
+    Node* memoryPositionY = new Node(code, kPositionValueCode);
+    bool createdPositionX = memoryPositionX->create();
+    bool createdPositionY = memoryPositionY->create();
+
+    if (createdPositionX && createdPositionY) {
+        myChilds.push_back(memoryPositionX);
+        myChilds.push_back(memoryPositionY);
+        return true;
+    } else {
+        delete memoryPositionX;
+        delete memoryPositionY;
+        return false;
+    }
 }
 
 bool Node::readMemoryStatement() {
-    return true;
+    Node* memoryPosition = new Node(code, kPositionValueCode);
+    bool createdPosition = memoryPosition->create();
+
+    if (createdPosition) {
+        myChilds.push_back(memoryPosition);
+        return true;
+    } else {
+        delete memoryPosition;
+        return false;
+    }
 }
 
 bool Node::sequenceStatement() {
@@ -150,20 +205,24 @@ bool Node::sequenceStatement() {
 
     if (0 == myChilds.size())
         return false;
-    return true;
+    else
+        return true;
 }
 
 bool Node::setMemoryStatement() {
-    Node* memoryPosition = new Node(code, kPositionStatementCode);
+    Node* memoryPosition = new Node(code, kPositionValueCode);
     Node* memoryNumber   = new Node(code, kNumberStatementCode);
 
     bool createdPosition = memoryPosition->create();
     bool createdNumber   = memoryNumber->create();
 
     if (createdPosition && createdNumber) {
+        myChilds.push_back(memoryPosition);
+        myChilds.push_back(memoryNumber);
+        return true;
+    } else {
         delete memoryNumber;
         delete memoryPosition;
         return false;
     }
-    return true;
 }
