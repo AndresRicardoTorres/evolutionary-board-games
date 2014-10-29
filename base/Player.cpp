@@ -10,6 +10,6 @@ Player::~Player() {
     delete cl;
 }
 
-nextMove Player::run(int** board){
-    return vm->run(board);
+nextMove Player::run(int** board, int height, int width){
+    return vm->run(board, height, width);
 }

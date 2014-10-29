@@ -27,6 +27,7 @@ class TwoPlayerGame
         Player* playerA;
         Player* playerB;
         int width;
+        int heigth;
 };
 
 #endif // TWOPLAYERGAME_H

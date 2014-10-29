@@ -15,7 +15,7 @@ class Player
     public:
         Player(choicesList code);
         virtual ~Player();
-        nextMove run(int** board);
+        nextMove run(int** board, int height, int width);
     protected:
     private:
         VirtualMachine* vm;

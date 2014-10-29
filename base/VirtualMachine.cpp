@@ -1,7 +1,9 @@
 #include "VirtualMachine.h"
 
 VirtualMachine::VirtualMachine(ChoicesList* code) {
-    state = 0;
+    state       = 0;
+    boardHeight = 0;
+    boardWidth  = 0;
     programTree = new Node(code, 1);
     bool isComplete = programTree->create();
     if (isComplete)
@@ -18,8 +20,10 @@ VirtualMachine::~VirtualMachine() {
     delete[] memory;
 }
 
-nextMove VirtualMachine::run(int** board_in) {
-    board = board_in;
+nextMove VirtualMachine::run(int** board_in, int height, int width) {
+    board       = board_in;
+    boardHeight = height;
+    boardWidth  = width;
     for (int i = 0; i < kMemoryPositionLimit; i++) {
         memory[i] = 0;
     }
@@ -63,8 +67,6 @@ int VirtualMachine::execute(Node* aNode) {
             int a = execute(childs[0]);
             int b = execute(childs[1]);
             if (debug) {
-                std::cout << "TYPE " << childs[0]->getType() << std::endl;
-                std::cout << "TYPE " << childs[1]->getType() << std::endl;
                 std::cout << "memory[" << a << "] =  " << b << std::endl;
             }
             memory[a] = b;
@@ -86,11 +88,26 @@ int VirtualMachine::execute(Node* aNode) {
             return 0;
         }
         break;
+    case 93:
+        if (0 == childs.size()) {
+            if (debug) {
+                std::cout << "NUM   " << aNode->getNumberValue() << std::endl;
+            }
+            return aNode->getNumberValue();
+        }
     case 94:
-        std::cout << "childs.size()   " << childs.size() << std::endl;
         if (2 == childs.size()) {
             int a = childs[0]->getNumberValue();
             int b = childs[1]->getNumberValue();
+
+            if (debug) {
+                    std::cout << "HW[" << boardHeight << "][" << boardWidth << "]" << std::endl;
+                std::cout << "board[" << a << "][" << b << "]" << std::endl;
+            }
+
+            a = Util::modular(a, boardHeight);
+            b = Util::modular(b, boardWidth);
+
             if (debug) {
                 std::cout << "board[" << a << "][" << b << "]" << std::endl;
             }
@@ -122,7 +139,7 @@ int VirtualMachine::execute(Node* aNode) {
     case 99:
         if (3 == childs.size()) {
             int valueA     = execute(childs[1]);
-            int valueB     = execute(childs[1]);
+            int valueB     = execute(childs[2]);
             int comparator = childs[0]->getNumberValue();
 
             switch (comparator) {

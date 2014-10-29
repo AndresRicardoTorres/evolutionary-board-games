@@ -26,7 +26,7 @@
 				<Option object_output="../obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="--secret 23,23 --program 4,10,9,7,4,9,4,10,7,2" />
+				<Option parameters="--secret 17,13 --program 4,2,3,7,1,1,9,7,8,5,2,2,4,5" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add directory=".." />
@@ -64,6 +64,8 @@
 		<Unit filename="../base/OnePlayerGame.h" />
 		<Unit filename="../base/Player.cpp" />
 		<Unit filename="../base/Player.h" />
+		<Unit filename="../base/Util.cpp" />
+		<Unit filename="../base/Util.h" />
 		<Unit filename="../base/VirtualMachine.cpp" />
 		<Unit filename="../base/VirtualMachine.h" />
 		<Unit filename="../guess_number/GuessNumberOnePlayer.cpp" />

@@ -5,7 +5,8 @@
 #include <string>
 #include <list>
 
-#include "Node.h"
+#include "base/Node.h"
+#include "base/Util.h"
 
 typedef boost::tuple<int, int, int> nextMove;
 
@@ -14,7 +15,7 @@ class VirtualMachine
     public:
         VirtualMachine(ChoicesList* code);
         virtual ~VirtualMachine();
-        nextMove run(int** board_in);
+        nextMove run(int** board_in, int height, int width);
     protected:
     private:
         int execute(Node* aNode);
@@ -22,6 +23,8 @@ class VirtualMachine
         Node* programTree;
         int* memory;
         int** board;
+        int boardHeight;
+        int boardWidth;
 };
 
 #endif // VIRTUALMACHINE_H

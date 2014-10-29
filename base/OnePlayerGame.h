@@ -12,7 +12,7 @@ typedef std::list<int> choicesList;
 class OnePlayerGame
 {
     public:
-        OnePlayerGame(int heigth, int width, choicesList code);
+        OnePlayerGame(int height, int width, choicesList code);
         virtual ~OnePlayerGame();
 
         int play();
@@ -21,6 +21,7 @@ class OnePlayerGame
         int** board;
     private:
         Player* playerA;
+        int height;
         int width;
 };
 

@@ -3,6 +3,8 @@
 
 #include <list>
 
+#include "base/Util.h"
+
 class ChoicesList {
  public:
     ChoicesList(std::list<int> aList);

@@ -10,9 +10,7 @@ Node::~Node() {
     }
 }
 
-#include <iostream>
 bool Node::blockStatement() {
-    //std::cout << "blockStatement TYPE" << getType() << std::endl;
     switch (type) {
         case 1:
             return sequenceStatement();
@@ -35,7 +33,7 @@ bool Node::booleanStatement() {
 
     bool createdOperator = operatorNode->create();
     bool createdA        = operatorA->create();
-    bool createdB        = operatorA->create();
+    bool createdB        = operatorB->create();
 
     if (createdOperator && createdA && createdB) {
         myChilds.push_back(operatorNode);
@@ -50,24 +48,24 @@ bool Node::booleanStatement() {
     }
 }
 
-#include <iostream>
 bool Node::create() {
-    //std::cout << "create TYPE" << getType() << std::endl;
     if (type <= kStatementLimit)
         return blockStatement();
 
     switch (type) {
-    case kNumberReadBoardCode:
+    case kNumberValueCode: /// 93
+        return numberValueStatement(kMemoryIntegerLimit);
+    case kNumberReadBoardCode: /// 94
         return readBoardStatement();
-    case kNumberReadMemCode:
+    case kNumberReadMemCode: /// 95
         return readMemoryStatement();
-    case kPositionValueCode:
+    case kPositionValueCode: /// 96
         return numberValueStatement(kMemoryPositionLimit);
-    case kNumberStatementCode:
+    case kNumberStatementCode: /// 97
         return numberStatement();
-    case kBooleanOperatorCode:
-        return numberValueStatement(kBooleanOperatorCode);
-    case kBooleanStatementCode:
+    case kBooleanOperatorCode: /// 98
+        return numberValueStatement(kBooleanOperatorLimit);
+    case kBooleanStatementCode: /// 99
         return booleanStatement();
     }
     return false;
@@ -110,13 +108,10 @@ bool Node::ifStatement() {
        }
 }
 
-#include <iostream>
 bool Node::numberStatement() {
     int option = nextNumber(kNumberStatementLimit);
     Node* numberNode;
     bool created = false;
-
-    //std::cout << "numberStatement() option" << option << std::endl;
 
     if (0 == option)
         return false;
@@ -124,14 +119,17 @@ bool Node::numberStatement() {
     switch (option) {
     case 1:
         numberNode = new Node(code, kNumberValueCode);
+        break;
     case 2:
         numberNode = new Node(code, kNumberReadBoardCode);
+        break;
     case 3:
         numberNode = new Node(code, kNumberReadMemCode);
+        break;
     }
 
     created = numberNode->create();
-//std::cout << "numberStatement() created" << created << std::endl;
+
     if (created) {
         myChilds.push_back(numberNode);
         return true;
@@ -143,6 +141,7 @@ bool Node::numberStatement() {
 
 bool Node::numberValueStatement(int limit) {
     int option = nextNumber(limit);
+
     if (option == 0) {
         return false;
     } else {
@@ -151,11 +150,8 @@ bool Node::numberValueStatement(int limit) {
     }
 }
 
-#include <iostream>
 int Node::nextNumber(int mod) {
-    int i = code->nextNumber(mod);
-    //std::cout << " nextNumber " << i << " % " << mod << std::endl;
-    return i;
+    return code->nextNumber(mod);
 }
 
 bool Node::readBoardStatement() {

@@ -20,7 +20,21 @@ std::list <int> listCase1(){
     return testCode;
 }
 
-std::list <int> listCase3(){
+std::list <int> listCase2() {
+    std::list <int> testCode;
+    testCode.push_back(4);
+    testCode.push_back(10);
+    testCode.push_back(9);
+    testCode.push_back(7);
+    testCode.push_back(4);
+    testCode.push_back(9);
+    testCode.push_back(4);
+    testCode.push_back(10);
+    testCode.push_back(7);
+    return testCode;
+}
+
+std::list <int> listCase3() {
     std::list <int> testCode;
     testCode.push_back(8);
     testCode.push_back(6);
@@ -35,7 +49,7 @@ std::list <int> listCase3(){
     return testCode;
 }
 
-std::list <int> listCase4(){
+std::list <int> listCase4() {
     std::list <int> testCode;
     for (unsigned int i = 1; i < 200; i++) {
             testCode.push_back(i);
@@ -43,7 +57,7 @@ std::list <int> listCase4(){
     return testCode;
 }
 
-std::list <int> listCase5(){
+std::list <int> listCase5() {
     std::list <int> testCode;
     testCode.push_back(5);
     testCode.push_back(7);
@@ -66,7 +80,61 @@ std::list <int> listCase5(){
     return testCode;
 }
 
-std::list <int> listCase10(){
+std::list <int> listCase6() {
+    std::list <int> testCode;
+    testCode.push_back(1);
+    testCode.push_back(2);
+    testCode.push_back(1);
+    testCode.push_back(1);
+    testCode.push_back(10);
+    return testCode;
+}
+
+std::list <int> listCase7() {
+    std::list <int> testCode;
+    testCode.push_back(10);
+    testCode.push_back(8);
+    testCode.push_back(6);
+    testCode.push_back(2);
+    testCode.push_back(2);
+    testCode.push_back(6);
+    testCode.push_back(7);
+    testCode.push_back(4);
+    testCode.push_back(8);
+    testCode.push_back(5);
+    return testCode;
+}
+
+std::list <int> listCase8() {
+    std::list <int> testCode;
+    testCode.push_back(4);
+    testCode.push_back(2);
+    testCode.push_back(3);
+    testCode.push_back(7);
+    testCode.push_back(1);
+    testCode.push_back(1);
+    testCode.push_back(9);
+    testCode.push_back(7);
+    testCode.push_back(8);
+    testCode.push_back(5);
+    testCode.push_back(2);
+    testCode.push_back(2);
+    testCode.push_back(4);
+    testCode.push_back(5);
+    return testCode;
+}
+
+std::list <int> listCase9() {
+    std::list <int> testCode;
+    testCode.push_back(1);
+    testCode.push_back(2);
+    testCode.push_back(7);
+    testCode.push_back(1);
+    testCode.push_back(23);
+    return testCode;
+}
+
+std::list <int> listCase10() {
     std::list <int> testCode;
     testCode.push_back(4);
     testCode.push_back(10);
@@ -78,6 +146,26 @@ std::list <int> listCase10(){
     testCode.push_back(10);
     testCode.push_back(7);
     testCode.push_back(2);
+    return testCode;
+}
+
+std::list <int> listCase11() {
+    std::list <int> testCode;
+    testCode.push_back(1);
+    testCode.push_back(3);
+    testCode.push_back(2);
+    testCode.push_back(2);
+    testCode.push_back(3);
+    testCode.push_back(1);
+    testCode.push_back(26);
+    testCode.push_back(1);
+    testCode.push_back(14);
+    testCode.push_back(7);
+    testCode.push_back(1);
+    testCode.push_back(23);
+    testCode.push_back(7);
+    testCode.push_back(1);
+    testCode.push_back(23);
     return testCode;
 }
 
@@ -92,17 +180,7 @@ ChoicesList* case1() {
 }
 
 ChoicesList* case2() {
-    std::list <int> testCode;
-    testCode.push_back(4);
-    testCode.push_back(10);
-    testCode.push_back(9);
-    testCode.push_back(7);
-    testCode.push_back(4);
-    testCode.push_back(9);
-    testCode.push_back(4);
-    testCode.push_back(10);
-    testCode.push_back(7);
-    ChoicesList* cl = new ChoicesList(testCode);
+    ChoicesList* cl = new ChoicesList(listCase2());
     return cl;
 }
 
@@ -121,9 +199,33 @@ ChoicesList* case5() {
     return cl;
 }
 
+ChoicesList* case6() {
+    ChoicesList* cl = new ChoicesList(listCase6());
+    return cl;
+}
+
+ChoicesList* case7() {
+    ChoicesList* cl = new ChoicesList(listCase7());
+    return cl;
+}
+
+ChoicesList* case8() {
+    ChoicesList* cl = new ChoicesList(listCase8());
+    return cl;
+}
+
+ChoicesList* case9() {
+    ChoicesList* cl = new ChoicesList(listCase9());
+    return cl;
+}
+
 ChoicesList* case10() {
     ChoicesList* cl = new ChoicesList(listCase10());
     return cl;
+}
+
+ChoicesList* case11() {
+    return new ChoicesList(listCase11());
 }
 
 int** emptyBoard(int width, int heigth) {
@@ -185,7 +287,35 @@ int testNodes4() {
 }
 
 int testNodes5() {
-    ChoicesList* cl = case4();
+    ChoicesList* cl = case5();
+    Node* programTree = new Node(cl, 1);
+    bool isComplete = programTree->create();
+    if(!isComplete)
+        std::cout << "programTree INCOMPLETE" << std::endl;
+    std::vector<Node*> childs = programTree->getChilds();
+
+    delete cl;
+    delete programTree;
+
+    return 0;
+}
+
+int testNodes6() {
+    ChoicesList* cl = case6();
+    Node* programTree = new Node(cl, 1);
+    bool isComplete = programTree->create();
+    if(!isComplete)
+        std::cout << "programTree INCOMPLETE" << std::endl;
+    std::vector<Node*> childs = programTree->getChilds();
+
+    delete cl;
+    delete programTree;
+
+    return 0;
+}
+
+int testNodes7() {
+    ChoicesList* cl = case7();
     Node* programTree = new Node(cl, 1);
     bool isComplete = programTree->create();
     if(!isComplete)
@@ -210,81 +340,64 @@ int testNodes10() {
     return 0;
 }
 
-int testVM0() {
-    ChoicesList* cl = case0();
+int testVMBase(ChoicesList* cl) {
     VirtualMachine* vm = new VirtualMachine(cl);
-    int ** b = emptyBoard(2, 2);
-    vm->run(b);
-    deleteBoard(b, 2, 2);
+    int height = 2;
+    int width  = 2;
+    int ** b = emptyBoard(height, width);
+    vm->run(b, height, width);
+    deleteBoard(b, height, width);
     delete cl;
     delete vm;
     return 0;
+}
+
+int testVM0() {
+    return testVMBase(case0());
 }
 
 int testVM1() {
-    ChoicesList* cl = case1();
-    VirtualMachine* vm = new VirtualMachine(cl);
-    int ** b = emptyBoard(2, 2);
-    vm->run(b);
-    deleteBoard(b, 2, 2);
-    delete cl;
-    delete vm;
-    return 0;
+    return testVMBase(case1());
 }
 
 int testVM2() {
-    ChoicesList* cl = case2();
-    VirtualMachine* vm = new VirtualMachine(cl);
-    int ** b = emptyBoard(2, 2);
-    vm->run(b);
-    deleteBoard(b, 2, 2);
-    delete cl;
-    delete vm;
-    return 0;
+    return testVMBase(case2());
 }
 
 int testVM3() {
-    ChoicesList* cl = case3();
-    VirtualMachine* vm = new VirtualMachine(cl);
-    int ** b = emptyBoard(2, 2);
-    vm->run(b);
-    deleteBoard(b, 2, 2);
-    delete cl;
-    delete vm;
-    return 0;
+    return testVMBase(case3());
 }
 
 int testVM4() {
-    ChoicesList* cl = case4();
-    VirtualMachine* vm = new VirtualMachine(cl);
-    int ** b = emptyBoard(2, 2);
-    vm->run(b);
-    deleteBoard(b, 2, 2);
-    delete cl;
-    delete vm;
-    return 0;
+    return testVMBase(case4());
 }
 
 int testVM5() {
-    ChoicesList* cl = case5();
-    VirtualMachine* vm = new VirtualMachine(cl);
-    int ** b = emptyBoard(2, 2);
-    vm->run(b);
-    deleteBoard(b, 2, 2);
-    delete cl;
-    delete vm;
-    return 0;
+    return testVMBase(case5());
+}
+
+int testVM6() {
+    return testVMBase(case6());
+}
+
+int testVM7() {
+    return testVMBase(case7());
+}
+
+int testVM8() {
+    return testVMBase(case8());
+}
+
+int testVM9() {
+    return testVMBase(case9());
 }
 
 int testVM10() {
-    ChoicesList* cl = case10();
-    VirtualMachine* vm = new VirtualMachine(cl);
-    int ** b = emptyBoard(2, 2);
-    vm->run(b);
-    deleteBoard(b, 2, 2);
-    delete cl;
-    delete vm;
-    return 0;
+    return testVMBase(case10());
+}
+
+int testVM11() {
+    return testVMBase(case11());
 }
 
 int testBoards() {
@@ -297,7 +410,7 @@ int testPlayer0() {
     Player* p = new Player(listCase0());
     int ** board = emptyBoard(2, 2);
 
-    p->run(board);
+    p->run(board, 2, 2);
 
     deleteBoard(board ,2 ,2);
     delete p;
@@ -309,7 +422,7 @@ int testPlayer10() {
     Player* p = new Player(listCase10());
     int ** board = emptyBoard(2, 2);
 
-    p->run(board);
+    p->run(board, 2, 2);
 
     deleteBoard(board ,2 ,2);
     delete p;
@@ -360,13 +473,30 @@ int main() {
 //    msg("Test 3");
 //    testNodes3();
 //    testVM3();
-
+//
 //    msg("Test 4");
 //    testNodes4();
 //    testVM4();
+//
+//    msg("Test 5");
+//    testVM5();
+//
+//    msg("Test 6");
+//    testNodes6();
+//    testVM6();
+//
+//    msg("Test 7");
+//    testNodes7();
+//    testVM7();
 
-    msg("Test 5");
-    testVM5();
+//    msg("Test 8");
+//    testVM8();
+
+//    msg("Test 9");
+//    testVM9();
+
+    msg("Test 11");
+    testVM11();
 
 //    msg("Test 10");
 //    testNodes10();

@@ -10,7 +10,8 @@ TwoPlayerGame::TwoPlayerGame( int heigth
     std::cout << std::endl << "playerB " << codeB.size() << std::endl;
     playerB = new Player(codeB);
 
-    this->width = width;
+    this->width  = width;
+    this->heigth = heigth;
     board = new int*[width];
     for (int i = 0; i < width; i++){
         board[i] = new int[heigth];
@@ -33,9 +34,9 @@ int TwoPlayerGame::play() {
 }
 
 nextMove TwoPlayerGame::runPlayerA() {
-    return playerA->run(board);
+    return playerA->run(board, heigth, width);
 }
 
 nextMove TwoPlayerGame::runPlayerB() {
-    return playerB->run(board);
+    return playerB->run(board, heigth, width);
 }
