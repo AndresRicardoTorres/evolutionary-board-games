@@ -13,6 +13,8 @@ VirtualMachine::VirtualMachine(ChoicesList* code) {
     for (int i = 0; i < kMemoryPositionLimit; i++) {
         memory[i] = 0;
     }
+    mongo::client::initialize();
+    mongoConnection.connect("localhost");
 }
 
 VirtualMachine::~VirtualMachine() {
@@ -86,6 +88,100 @@ int VirtualMachine::execute(Node* aNode) {
             }
 
             return 0;
+        }
+        break;
+    case 4:
+        if (0 == childs.size() && aNode->getAllowFunctions()) {
+            int functionsCount   = mongoConnection.count("functions.test");
+            int indexFunction    = aNode->getNumberValue();
+            int selectedFunction = 0;
+            bool isComplete      = false;
+
+            std::string    codeProgram;
+            std::vector    <mongo::BSONElement> elements;
+            std::list      <int> listCode;
+            std::auto_ptr  <mongo::DBClientCursor> cursor;
+            mongo::BSONObj objFunction;
+
+            ChoicesList* cl;
+            Node*        aNodeFunction;
+
+            if (debug) {
+                std::cout << "count:" << functionsCount << std::endl;
+            }
+
+            if (functionsCount > 0) {
+                selectedFunction = Util::modularWithoutZero(indexFunction,
+                                                            functionsCount);
+
+                cursor = mongoConnection.query("functions.test",
+                                          BSON( "id" << selectedFunction ));
+                objFunction = cursor->next();
+
+                elements = objFunction["code"].Array();
+                for (unsigned i = 0; i < elements.size(); i++) {
+                    listCode.push_back(elements.at(i).numberInt());
+                }
+
+                cl = new ChoicesList(listCode);
+                aNodeFunction = new Node(cl, 1);
+                aNodeFunction->setAllowFunctions(false);
+                isComplete = aNodeFunction->create();
+
+                if(isComplete) {
+                    execute(aNodeFunction);
+                }
+                delete cl;
+                delete aNodeFunction;
+            }
+        }
+        break;
+    case 88:
+        if (2 == childs.size()) {
+            int a = execute(childs[0]);
+            int b = execute(childs[1]);
+            if (debug) {
+                std::cout << "SUM   " << a << " + " << b << std::endl;
+            }
+            return a + b;
+        }
+        break;
+    case 89:
+        if (2 == childs.size()) {
+            int a = execute(childs[0]);
+            int b = execute(childs[1]);
+            if (debug) {
+                std::cout << "SUB   " << a << " - " << b << std::endl;
+            }
+            return a - b;
+        }
+        break;
+    case 90:
+        if (2 == childs.size()) {
+            int a = execute(childs[0]);
+            int b = execute(childs[1]);
+            if (debug) {
+                std::cout << "MUL   " << a << " * " << b << std::endl;
+            }
+            return a * b;
+        }
+        break;
+    case 91:
+        if (2 == childs.size()) {
+            int a = execute(childs[0]);
+            int b = execute(childs[1]);
+            if (debug) {
+                std::cout << "DIV   " << a << " / " << b << std::endl;
+            }
+            if (b == 0)
+                return 0;
+            else
+                return a / b;
+        }
+        break;
+    case 92:
+        if (1 == childs.size()) {
+            return execute(childs[0]);
         }
         break;
     case 93:

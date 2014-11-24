@@ -2,6 +2,7 @@
 
 Node::Node(ChoicesList* code_in, int type_in) : code(code_in) , type(type_in) {
     numberValue = 0;
+    allowFunctions = true;
 }
 
 Node::~Node() {
@@ -18,6 +19,8 @@ bool Node::blockStatement() {
             return setMemoryStatement();
         case 3:
             return ifStatement();
+        case 4:
+            return functionStatement();
         default:
             return false;
         }
@@ -53,6 +56,16 @@ bool Node::create() {
         return blockStatement();
 
     switch (type) {
+    case kMathSumCode: /// 88
+        return mathSumStatement();
+    case kMathSubCode: /// 89
+        return mathSubStatement();
+    case kMathMulCode: /// 90
+        return mathMulStatement();
+    case kMathDivCode: /// 91
+        return mathDivStatement();
+    case kNumberMathCode: /// 92
+        return mathStatement();
     case kNumberValueCode: /// 93
         return numberValueStatement(kMemoryIntegerLimit);
     case kNumberReadBoardCode: /// 94
@@ -73,6 +86,10 @@ bool Node::create() {
 
 std::vector<Node*> Node::getChilds() {
     return myChilds;
+}
+
+bool Node::getAllowFunctions(){
+    return allowFunctions;
 }
 
 int Node::getNumberValue() {
@@ -108,6 +125,122 @@ bool Node::ifStatement() {
        }
 }
 
+bool Node::mathStatement() {
+    int option = nextNumber(kMathStatementLimit);
+    Node* numberNode;
+    bool created = false;
+
+    if (0 == option)
+        return false;
+
+    switch (option) {
+    case 1:
+        numberNode = new Node(code, kMathSumCode);
+        break;
+    case 2:
+        numberNode = new Node(code, kMathSubCode);
+        break;
+    case 3:
+        numberNode = new Node(code, kMathMulCode);
+        break;
+    case 4:
+        numberNode = new Node(code, kMathDivCode);
+        break;
+    }
+
+    created = numberNode->create();
+
+    if (created) {
+        myChilds.push_back(numberNode);
+        return true;
+    } else {
+        delete numberNode;
+        return false;
+    }
+}
+
+bool Node::mathSumStatement() {
+    Node* operatorOne = new Node(code, kNumberStatementCode);
+    Node* operatorTwo = new Node(code, kNumberStatementCode);
+
+    bool createdOne = operatorOne->create();
+    bool createdTwo = operatorTwo->create();
+
+    if (createdOne && createdTwo) {
+        myChilds.push_back(operatorOne);
+        myChilds.push_back(operatorTwo);
+        return true;
+    } else {
+        delete operatorOne;
+        delete operatorTwo;
+        return false;
+    }
+}
+
+bool Node::mathSubStatement() {
+    Node* operatorOne = new Node(code, kNumberStatementCode);
+    Node* operatorTwo = new Node(code, kNumberStatementCode);
+
+    bool createdOne = operatorOne->create();
+    bool createdTwo = operatorTwo->create();
+
+    if (createdOne && createdTwo) {
+        myChilds.push_back(operatorOne);
+        myChilds.push_back(operatorTwo);
+        return true;
+    } else {
+        delete operatorOne;
+        delete operatorTwo;
+        return false;
+    }
+}
+
+bool Node::mathMulStatement() {
+    Node* operatorOne = new Node(code, kNumberStatementCode);
+    Node* operatorTwo = new Node(code, kNumberStatementCode);
+
+    bool createdOne = operatorOne->create();
+    bool createdTwo = operatorTwo->create();
+
+    if (createdOne && createdTwo) {
+        myChilds.push_back(operatorOne);
+        myChilds.push_back(operatorTwo);
+        return true;
+    } else {
+        delete operatorOne;
+        delete operatorTwo;
+        return false;
+    }
+}
+
+bool Node::mathDivStatement() {
+    Node* operatorOne = new Node(code, kNumberStatementCode);
+    Node* operatorTwo = new Node(code, kNumberStatementCode);
+
+    bool createdOne = operatorOne->create();
+    bool createdTwo = operatorTwo->create();
+
+    if (createdOne && createdTwo) {
+        myChilds.push_back(operatorOne);
+        myChilds.push_back(operatorTwo);
+        return true;
+    } else {
+        delete operatorOne;
+        delete operatorTwo;
+        return false;
+    }
+}
+
+bool Node::functionStatement() {
+    int randomIndex = nextNumber(kFunctionLimit);
+    if (randomIndex != 0) {
+        numberValue = randomIndex;
+        return true;
+    } else {
+        return true;
+    }
+}
+
 bool Node::numberStatement() {
     int option = nextNumber(kNumberStatementLimit);
     Node* numberNode;
@@ -125,6 +258,9 @@ bool Node::numberStatement() {
         break;
     case 3:
         numberNode = new Node(code, kNumberReadMemCode);
+        break;
+    case 4:
+        numberNode = new Node(code, kNumberMathCode);
         break;
     }
 
@@ -185,24 +321,32 @@ bool Node::readMemoryStatement() {
 }
 
 bool Node::sequenceStatement() {
-    int howManyNodes     = 0;
-    int limitSequence    = 10;
+    int howManyNodes  = 0;
+    int limitSequence = 10;
 
     howManyNodes = nextNumber(limitSequence);
     for (int i = 0; i < howManyNodes; i++) {
         int newType     = nextNumber(kStatementLimit);
         Node* aNode     = new Node(code, newType);
         bool isComplete = aNode->blockStatement();
-        if (isComplete)
+
+        if (isComplete) {
+            aNode->setAllowFunctions(getAllowFunctions());
             myChilds.push_back(aNode);
-        else
+        }
+        else {
             delete aNode;
+        }
     }
 
     if (0 == myChilds.size())
         return false;
     else
         return true;
+}
+
+void Node::setAllowFunctions(bool val){
+    allowFunctions = val;
 }
 
 bool Node::setMemoryStatement() {
@@ -222,3 +366,5 @@ bool Node::setMemoryStatement() {
         return false;
     }
 }
+
+

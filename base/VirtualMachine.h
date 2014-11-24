@@ -2,8 +2,10 @@
 #define VIRTUALMACHINE_H
 
 #include <boost/tuple/tuple.hpp>
-#include <string>
+#include "mongo/client/dbclient.h"
 #include <list>
+#include <string>
+#include <vector>
 
 #include "base/Node.h"
 #include "base/Util.h"
@@ -25,6 +27,7 @@ class VirtualMachine
         int** board;
         int boardHeight;
         int boardWidth;
+        mongo::DBClientConnection mongoConnection;
 };
 
 #endif // VIRTUALMACHINE_H
