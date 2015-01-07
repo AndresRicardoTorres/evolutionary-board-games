@@ -11,8 +11,12 @@ GuessNumberOnePlayer::~GuessNumberOnePlayer(){
 }
 
 #include <stdlib.h>
+#include <iostream>
 int GuessNumberOnePlayer::play() {
-    int limitTime = 100;
+    if(solution.size() != 2)
+        return -1;
+    bool debug    = false;
+    int limitTime = 4;
     bool gameOver = false;
 
     nextMove aMove;
@@ -23,6 +27,11 @@ int GuessNumberOnePlayer::play() {
         second = boost::tuples::get<1>(aMove);
         third  = boost::tuples::get<2>(aMove);
 
+        if (debug) {
+            std::cout << "*** PLAY board[" << first << "][" << second << "] = "
+            << third << std::endl;
+        }
+
         if(validMove(first, second, third)){
             board[first][second] = third;
 
@@ -31,6 +40,14 @@ int GuessNumberOnePlayer::play() {
         }
         limitTime--;
         gameOver = gameOver || limitTime < 0;
+    }
+    if (0 == board[0][0] && 0 == board[0][1]) {
+        return 1000;
+    }
+    if (0 == board[0][0] || 0 == board[0][1]) {
+        return (abs(board[0][0] - solution.front()) +
+                abs(board[0][1] - solution.back())) +
+                500;
     }
     return (abs(board[0][0] - solution.front()) +
             abs(board[0][1] - solution.back()));

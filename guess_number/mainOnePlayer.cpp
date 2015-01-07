@@ -63,6 +63,7 @@ int main(int argc, char *argv[]) {
             GuessNumberOnePlayer *objGame = new GuessNumberOnePlayer(goal
                                                                     , code);
             int score = objGame->play();
+
             std::cout << score << std::endl;
             delete objGame;
         } else {

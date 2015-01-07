@@ -4,7 +4,9 @@ OnePlayerGame::OnePlayerGame( int heigth, int width, choicesList code) {
 
     playerA = new Player(code);
 
-    this->width = width;
+    this->height = heigth;
+    this->width  = width;
+
     board = new int *[width];
     for (int i = 0; i < width; i++){
         board[i] = new int[heigth];
@@ -17,10 +19,8 @@ OnePlayerGame::~OnePlayerGame() {
 
     for (int i = 0; i < width; i++){
         delete[] board[i];
-        board[i] = NULL;
     }
     delete[] board;
-    board = NULL;
 }
 
 int OnePlayerGame::play() {
@@ -28,5 +28,5 @@ int OnePlayerGame::play() {
 }
 
 nextMove OnePlayerGame::runPlayerA() {
-    return playerA->run(board);
+    return playerA->run(board, height, width);
 }

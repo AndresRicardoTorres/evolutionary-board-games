@@ -26,7 +26,7 @@
 				<Option object_output="../obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="--secret 23,23 --program 4,10,9,7,4,9,4,10,7,2" />
+				<Option parameters="--secret 17,13 --program 4,2,3,7,1,1,9,7,8,5,2,2,4,5" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add directory=".." />
@@ -36,17 +36,19 @@
 					<Add option="-lboost_program_options" />
 				</Linker>
 			</Target>
-			<Target title="test">
+			<Target title="Test">
 				<Option output="bin/test/GuessNumberOnePlayer" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/test/" />
 				<Option object_output="obj/test/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-pg" />
+					<Add option="-g" />
+					<Add directory=".." />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
+					<Add option="-pg" />
 				</Linker>
 			</Target>
 		</Build>
@@ -54,17 +56,27 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../base/ChoicesList.cpp" />
+		<Unit filename="../base/ChoicesList.h" />
 		<Unit filename="../base/Node.cpp" />
 		<Unit filename="../base/Node.h" />
 		<Unit filename="../base/OnePlayerGame.cpp" />
 		<Unit filename="../base/OnePlayerGame.h" />
 		<Unit filename="../base/Player.cpp" />
 		<Unit filename="../base/Player.h" />
+		<Unit filename="../base/Util.cpp" />
+		<Unit filename="../base/Util.h" />
 		<Unit filename="../base/VirtualMachine.cpp" />
 		<Unit filename="../base/VirtualMachine.h" />
 		<Unit filename="../guess_number/GuessNumberOnePlayer.cpp" />
 		<Unit filename="../guess_number/GuessNumberOnePlayer.h" />
-		<Unit filename="../guess_number/mainOnePlayer.cpp" />
+		<Unit filename="../guess_number/mainOnePlayer.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="../guess_number/testOnePlayer.cpp">
+			<Option target="Test" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
