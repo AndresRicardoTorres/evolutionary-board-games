@@ -169,6 +169,15 @@ std::list <int> listCase11() {
     return testCode;
 }
 
+std::list <int> listCase12() {
+    // A function with id 23
+    std::list <int> testCode;
+    testCode.push_back(1);
+    testCode.push_back(4);
+    testCode.push_back(23);
+    return testCode;
+}
+
 ChoicesList* case0() {
     ChoicesList* cl = new ChoicesList(listCase0());
     return cl;
@@ -226,6 +235,11 @@ ChoicesList* case10() {
 
 ChoicesList* case11() {
     return new ChoicesList(listCase11());
+}
+
+
+ChoicesList* case12() {
+    return new ChoicesList(listCase12());
 }
 
 int** emptyBoard(int width, int heigth) {
@@ -400,6 +414,10 @@ int testVM11() {
     return testVMBase(case11());
 }
 
+int testVM12() {
+    return testVMBase(case12());
+}
+
 int testBoards() {
     int ** board = emptyBoard(2, 2);
     deleteBoard(board ,2 ,2);
@@ -495,8 +513,11 @@ int main() {
 //    msg("Test 9");
 //    testVM9();
 
-    msg("Test 11");
-    testVM11();
+//    msg("Test 11");
+//    testVM11();
+
+    msg("Test 23");
+    testVM12();
 
 //    msg("Test 10");
 //    testNodes10();
