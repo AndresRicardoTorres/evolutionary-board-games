@@ -45,6 +45,7 @@ nextMove VirtualMachine::run(int** board_in, int height, int width) {
 }
 
 #include <iostream>
+#include <string>
 int VirtualMachine::execute(Node* aNode) {
     bool debug = false;
     std::vector<Node*> childs;
@@ -92,10 +93,11 @@ int VirtualMachine::execute(Node* aNode) {
         break;
     case 4:
         if (0 == childs.size() && aNode->getAllowFunctions()) {
-            int functionsCount   = mongoConnection.count("functions.test");
-            int indexFunction    = aNode->getNumberValue();
-            int selectedFunction = 0;
-            bool isComplete      = false;
+            std::string collection = "reuse.functions";
+            int functionsCount    = mongoConnection.count(collection);
+            int indexFunction     = aNode->getNumberValue();
+            int selectedFunction  = 0;
+            bool isComplete       = false;
 
             std::string    codeProgram;
             std::vector    <mongo::BSONElement> elements;
@@ -108,14 +110,19 @@ int VirtualMachine::execute(Node* aNode) {
 
             if (debug) {
                 std::cout << "count:" << functionsCount << std::endl;
+                std::cout << "indexFunction:" << indexFunction << std::endl;
             }
 
             if (functionsCount > 0) {
                 selectedFunction = Util::modularWithoutZero(indexFunction,
                                                             functionsCount);
 
-                cursor = mongoConnection.query("functions.test",
-                                          BSON( "id" << selectedFunction ));
+                if (debug) {
+                    std::cout << "Function" << selectedFunction << std::endl;
+                }
+
+                cursor = mongoConnection.query("reuse.functions",
+                                          BSON("id" << selectedFunction));
                 objFunction = cursor->next();
 
                 elements = objFunction["code"].Array();
@@ -128,7 +135,16 @@ int VirtualMachine::execute(Node* aNode) {
                 aNodeFunction->setAllowFunctions(false);
                 isComplete = aNodeFunction->create();
 
-                if(isComplete) {
+                if (isComplete) {
+                    /// Mark the function as used
+                    if (debug) {
+                        std::cout << "Mark function " << selectedFunction
+                            << std::endl;
+                    }
+                    mongoConnection.update("reuse.functions",
+                                            BSON("id" << selectedFunction),
+                                            BSON("$set" <<
+                                                BSON("used" << true)));
                     execute(aNodeFunction);
                 }
                 delete cl;

@@ -12,7 +12,7 @@ const int kBooleanOperatorLimit = 3;
 const int kStatementLimit       = 4;
 const int kNumberStatementLimit = 4;
 const int kMathStatementLimit   = 4;
-const int kFunctionLimit        = 100;
+const int kFunctionLimit        = 99;
 
 const int kMathSumCode          = 88;
 const int kMathSubCode          = 89;

@@ -4,7 +4,6 @@
 #include <boost/tuple/tuple.hpp>
 #include "mongo/client/dbclient.h"
 #include <list>
-#include <string>
 #include <vector>
 
 #include "base/Node.h"

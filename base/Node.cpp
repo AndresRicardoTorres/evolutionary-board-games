@@ -237,7 +237,7 @@ bool Node::functionStatement() {
         numberValue = randomIndex;
         return true;
     } else {
-        return true;
+        return false;
     }
 }
 
