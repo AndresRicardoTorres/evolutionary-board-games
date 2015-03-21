@@ -144,7 +144,7 @@ int VirtualMachine::execute(Node* aNode) {
                     mongoConnection.update("reuse.functions",
                                             BSON("id" << selectedFunction),
                                             BSON("$set" <<
-                                                BSON("used" << true)));
+                                                BSON("use" << true)));
                     execute(aNodeFunction);
                 }
                 delete cl;
