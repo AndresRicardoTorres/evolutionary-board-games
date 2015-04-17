@@ -174,6 +174,21 @@ std::list <int> listCase12() {
     std::list <int> testCode;
     testCode.push_back(1);
     testCode.push_back(4);
+    testCode.push_back(3);
+    return testCode;
+}
+
+std::list <int> listCase13() {
+    // MEM[1] = 23 * 23
+    std::list <int> testCode;
+    testCode.push_back(1);
+    testCode.push_back(2);
+    testCode.push_back(1);
+    testCode.push_back(4);
+    testCode.push_back(3);
+    testCode.push_back(1);
+    testCode.push_back(23);
+    testCode.push_back(1);
     testCode.push_back(23);
     return testCode;
 }
@@ -240,6 +255,10 @@ ChoicesList* case11() {
 
 ChoicesList* case12() {
     return new ChoicesList(listCase12());
+}
+
+ChoicesList* case13() {
+    return new ChoicesList(listCase13());
 }
 
 int** emptyBoard(int width, int heigth) {
@@ -354,6 +373,18 @@ int testNodes10() {
     return 0;
 }
 
+int testNodes13() {
+    ChoicesList* cl = case13();
+    Node* programTree = new Node(cl, 1);
+    programTree->create();
+
+    std::vector<Node*> childs = programTree->getChilds();
+
+    delete cl;
+    delete programTree;
+    return 0;
+}
+
 int testVMBase(ChoicesList* cl) {
     VirtualMachine* vm = new VirtualMachine(cl);
     int height = 2;
@@ -416,6 +447,10 @@ int testVM11() {
 
 int testVM12() {
     return testVMBase(case12());
+}
+
+int testVM13() {
+    return testVMBase(case13());
 }
 
 int testBoards() {
@@ -516,8 +551,11 @@ int main() {
 //    msg("Test 11");
 //    testVM11();
 
-    msg("Test 23");
+    msg("Test 12");
     testVM12();
+
+//    msg("Test 13");
+//    testVM13();
 
 //    msg("Test 10");
 //    testNodes10();

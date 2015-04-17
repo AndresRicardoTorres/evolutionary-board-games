@@ -42,12 +42,15 @@ int GuessNumberOnePlayer::play() {
         gameOver = gameOver || limitTime < 0;
     }
     if (0 == board[0][0] && 0 == board[0][1]) {
-        return 1000;
+        return solution.front() * 10 + solution.back() * 10;
     }
-    if (0 == board[0][0] || 0 == board[0][1]) {
-        return (abs(board[0][0] - solution.front()) +
-                abs(board[0][1] - solution.back())) +
-                500;
+    if (0 == board[0][0]) {
+        return abs(board[0][1] - solution.back()) +
+                solution.front() * 10;
+    }
+    if (0 == board[0][1]) {
+        return abs(board[0][0] - solution.front()) +
+                solution.back() * 10;
     }
     return (abs(board[0][0] - solution.front()) +
             abs(board[0][1] - solution.back()));

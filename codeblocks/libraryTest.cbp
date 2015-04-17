@@ -13,15 +13,17 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="/home/andresrtm/Github/evolutionary-board-games/" />
-					<Add directory="include" />
 				</Compiler>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory=".." />
 		</Compiler>
+		<Linker>
+			<Add option="-lboost_program_options -pthread -lmongoclient -lboost_thread -lboost_system -lboost_regex" />
+		</Linker>
 		<Unit filename="../base/ChoicesList.cpp" />
 		<Unit filename="../base/ChoicesList.h" />
 		<Unit filename="../base/Node.cpp" />

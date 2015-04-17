@@ -328,10 +328,10 @@ bool Node::sequenceStatement() {
     for (int i = 0; i < howManyNodes; i++) {
         int newType     = nextNumber(kStatementLimit);
         Node* aNode     = new Node(code, newType);
+        aNode->setAllowFunctions(getAllowFunctions());
         bool isComplete = aNode->blockStatement();
 
         if (isComplete) {
-            aNode->setAllowFunctions(getAllowFunctions());
             myChilds.push_back(aNode);
         }
         else {
